@@ -1,0 +1,62 @@
+project_name: example_project
+random_seed: 42
+
+num_clients: 20
+n_rounds: 200 
+m: 0.5
+local_epochs: 5 
+lr: 0.005
+lr2: 0.001
+agg: ssl 
+alignment_criterion: MSELoss
+alpha: 0.49
+beta1: 0.9
+tau: 0.1
+optimizer2: Adam
+lambda_: 0.001
+
+# FLearner arguments
+client_selector: BaseClientSelector
+client_cls: DMTL
+loss_fn: CrossEntropyLoss
+writer: WandbWriter
+
+
+# save and log directories
+root_dir: /scratch/project_2009050/
+save_dir : models
+res_dir: results
+log_dir: logs
+
+# metrics
+training_metrics: [accuracy_score]
+test_metrics: [accuracy_score]
+
+# Data configuration
+data:
+  data_dir: /scratch/project_2009050/
+  modality: [Vision]
+  batch_size: 20
+  name: Cifar10_20clients
+  niid: false
+  balance: false
+  partitioner: DirPartitioner
+  alpha: 0.1
+  train_ratio: 0.75
+  num_classes: 2
+
+# Model configuration
+model:
+  name: CIFAR10Model
+  dim_in: 784
+  dim_hidden: 128
+  dim_out: 10
+  hidden_size: 128
+  grad_norm_clip: 5.0
+
+
+
+# optimzer configuration
+optimizer:
+  name: SGD
+  weight_decay: 0.0
