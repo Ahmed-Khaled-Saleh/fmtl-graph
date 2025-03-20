@@ -5,7 +5,7 @@ num_clients: 20
 n_rounds: 200 
 m: 0.5
 local_epochs: 5 
-lr: 0.005
+lr: 0.05
 lr2: 0.001
 agg: ssl 
 alignment_criterion: MSELoss
@@ -13,11 +13,11 @@ alpha: 0.49
 beta1: 0.9
 tau: 0.1
 optimizer2: Adam
-lambda_: 1
+lambda_: 0.03
 
 # FLearner arguments
 client_selector: BaseClientSelector
-client_cls: DMTL
+client_cls: Fedu
 loss_fn: CrossEntropyLoss
 writer: WandbWriter
 
