@@ -7,8 +7,8 @@
 #SBATCH --mem=100G
 #SBATCH --time=4:00:00
 #SBATCH --gres=gpu:v100:1
-#SBATCH --output=logs/dmtl/logs/out.log
-#SBATCH --error=logs/dmtl/logs/out.err
+#SBATCH --output=./logs/out.log
+#SBATCH --error=./logs/err.log
 
 module --force purge
 module load pytorch
@@ -20,4 +20,4 @@ cd /projappl/project_2009050/fmtl-graph
 export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/code/FMTL-graph/mytorch/lib/python3.11/site-packages
 echo "Current PYTHONPATH: $PYTHONPATH"
 
-srun python main.py --config ./cfgs/cfg.yaml --env_file ./.env --lr2 0.00002 --
+srun python main.py --config ./cfgs/cfg.yaml --env_file ./.env --lr2 0.00002
