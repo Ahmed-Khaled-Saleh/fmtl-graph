@@ -8,16 +8,19 @@ local_epochs: 5
 lr: 0.05
 lr2: 0.001
 agg: ssl 
+num_classes: 10
 alignment_criterion: MSELoss
 alpha: 0.49
 beta1: 0.9
 tau: 0.1
 optimizer2: Adam
 lambda_: 0.03
+lambda_anchor: 0.1
+momentum_anchor: 0.5
 
 # FLearner arguments
 client_selector: BaseClientSelector
-client_cls: Fedu
+client_cls: DMTL
 loss_fn: CrossEntropyLoss
 writer: WandbWriter
 
@@ -27,6 +30,7 @@ root_dir: /scratch/project_2009050/
 save_dir : models
 res_dir: results
 log_dir: logs
+state_dir: aggregated_model_
 
 # metrics
 training_metrics: [accuracy_score]
@@ -43,17 +47,18 @@ data:
   partitioner: DirPartitioner
   alpha: 0.1
   train_ratio: 0.75
-  num_classes: 2
+  num_classes: 10
+  classes: [plane, car, bird, cat, deer, dog, frog, horse, ship, truck]
+
 
 # Model configuration
 model:
-  name: CIFAR10Model
-  dim_in: 784
-  dim_hidden: 128
-  dim_out: 10
-  hidden_size: 128
-  grad_norm_clip: 5.0
-
+  name: CIFAR10CNN
+  n_channels: 3
+  input_dim: 784
+  hidden_dim: 128
+  num_classes: 10
+  grad_norm_clip: 1.0
 
 
 # optimzer configuration

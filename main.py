@@ -3,82 +3,42 @@ import torch # type: ignore
 import os # type: ignore
 import gdown # type: ignore
 from datetime import datetime # type: ignore
+from copy import deepcopy
+import argparse
+import yaml
+from torch import nn
 from fastcore.utils import * # type: ignore
 from fedai.federated.agents import * # type: ignore
 from fedai.learner_utils import *  # type: ignore
 from fedai.client_selector import *  # type: ignore
 from fedai.wandb_writer import *  # type: ignore
 from fedai.FLearner import *  # type: ignore
-from fedai.vision.models import CIFAR10Model # type: ignore
-from fedai.vision.VisionBlock import Cifar10_20clients # type: ignore
+from fedai.vision.models import * # type: ignore
+from fedai.vision.VisionBlock import *
 from torch import nn # type: ignore
 from omegaconf import OmegaConf # type: ignore
-import argparse
-import yaml
 from huggingface_hub import login # type: ignore
 from dotenv import load_dotenv # type: ignore
 from peft import *  # type: ignore # noqa: F403
 
-def load_state_from_disk(cfg, state, latest_round, id, t, to_read_from):
+
+def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = None, state_dir= None, extra= False):
     
-    if cfg.agg == "one_model":
-        global_model_path = os.path.join(cfg.save_dir,
-                                        str(t-1),
-                                        "global_model",
-                                        "state.pth")
+    model = get_model(cfg)
+    criterion = get_criterion(loss_fn)
+    train_block = get_block(cfg, id)
+    test_block = get_block(cfg, id, train=False)
 
-        gloabal_model_state = torch.load(global_model_path, weights_only= False)
-        if isinstance(state["model"], torch.nn.Module):
-            state["model"].load_state_dict(gloabal_model_state["model"])
-            print(f"Loaded Global model state from {global_model_path}")
-        else:
-            set_peft_model_state_dict(state["model"],  # noqa: F405 # type: ignore
-                                      gloabal_model_state["model"],
-                                      "default")
+    state = {'model': model, 'optimizer': None, 'criterion': criterion, 't': t, 'h': None, 'h_c': None}
 
-    else:
-        if id not in latest_round:
-            return state
+    if t > 1:
+        state = load_state_from_disk(cfg, state, latest_round, id, t, state_dir)  
 
-        latest_comm_round = latest_round[id]
-        old_state_path = os.path.join(cfg.save_dir,
-                                       str(latest_comm_round),
-                                       f"{to_read_from}{id}",
-                                       "state.pth")
+    state['optimizer'] = get_cls("torch.optim", cfg.optimizer.name)(state['model'].parameters(), lr=cfg.lr)      
+    state['alignment_criterion']= get_cls("torch.nn", cfg.alignment_criterion)
+    
+    return client_cls(id, cfg, state, block= [train_block, test_block])
 
-        old_saved_state = torch.load(old_state_path, weights_only= False)
-
-        if isinstance(state["model"], nn.Module) or isinstance(state["model"], dict) :
-            state["model"].load_state_dict(old_saved_state["model"])
-
-            if to_read_from == "aggregated_model_":
-                state["h_c"] = old_saved_state["h_c"]
-                
-            print(f"Loaded client model state from {old_state_path}")
-        else:
-            set_peft_model_state_dict(state["model"],  # noqa: F405 # type: ignore
-                                      old_saved_state["model"],
-                                      "default")
-
-    return state
-
-def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = None, to_read_from= None, extra= False):
-
-        model = CIFAR10Model()
-        criterion = nn.CrossEntropyLoss()
-
-        train_block = Cifar10_20clients(cfg, id)
-        test_block = Cifar10_20clients(cfg, id, train=False)
-
-        state = {'model': model, 'optimizer': None, 'criterion': criterion, 't': t, 'h': None, 'h_c': None}
-
-        if t > 1 or extra:
-            state = load_state_from_disk(cfg, state, latest_round, id, t, to_read_from)  # noqa: F405
-
-        state['optimizer'] = get_cls("torch.optim", cfg.optimizer.name)(state['model'].parameters(), lr=cfg.lr)
-                                                                        
-        state['alignment_criterion']= get_cls("torch.nn", cfg.alignment_criterion)
-        return client_cls(id, cfg, state, block= [train_block, test_block])
 
 
 
@@ -91,8 +51,6 @@ if __name__ == "__main__":
     parser.add_argument('--lr2', type=float, help='Learning rate alginment', required=False)
     parser.add_argument('--batch_size', type=int, help='Batch size', required=False)
     parser.add_argument('--optimizer', type=str, help='Optimizer', required=False)
-    parser.add_argument('--optimizer2', type=str, help='Optimizer2', required=False)
-    parser.add_argument('--alignment_criterion', type=str, help='Alignment criterion', required=False)
     parser.add_argument('--client_cls', type=str, help='Client class', required=False)
     parser.add_argument('--agg', type=str, help='Aggregation', required=False)
     parser.add_argument('--lambda_', type=str, help='lambda for fedu and dmtl', required=False)

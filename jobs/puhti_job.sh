@@ -20,4 +20,4 @@ cd /projappl/project_2009050/fmtl-graph
 export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/code/FMTL-graph/mytorch/lib/python3.11/site-packages
 echo "Current PYTHONPATH: $PYTHONPATH"
 
-srun python main.py --config ./cfgs/cfg.yaml --env_file ./.env --lr2 0.00002
+srun python main.py --config ./cfgs/cfg.yaml --env_file ./.env
