@@ -77,7 +77,6 @@ if __name__ == "__main__":
     cfg.data.batch_size = args.batch_size if args.batch_size else cfg.data.batch_size
     cfg.optimizer.name = args.optimizer if args.optimizer else cfg.optimizer.name
 
-    cfg.alignment_criterion = args.alignment_criterion if args.alignment_criterion else cfg.alignment_criterion
     cfg.client_cls = args.client_cls if args.client_cls else cfg.client_cls
 
     cfg.agg = args.agg if args.agg else cfg.agg
