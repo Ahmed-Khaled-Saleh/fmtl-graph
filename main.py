@@ -76,7 +76,6 @@ if __name__ == "__main__":
 
     cfg.data.batch_size = args.batch_size if args.batch_size else cfg.data.batch_size
     cfg.optimizer.name = args.optimizer if args.optimizer else cfg.optimizer.name
-    cfg.optimizer2 = args.optimizer2 if args.optimizer2 else cfg.optimizer2
 
     cfg.alignment_criterion = args.alignment_criterion if args.alignment_criterion else cfg.alignment_criterion
     cfg.client_cls = args.client_cls if args.client_cls else cfg.client_cls
@@ -89,6 +88,11 @@ if __name__ == "__main__":
     client_cls = get_cls("fedai.federated.agents", cfg.client_cls)
     loss_fn = get_cls("torch.nn", cfg.loss_fn)
     writer = get_cls("fedai.wandb_writer", cfg.writer)
+
+    if cfg.client_cls == "FLAgent":
+        cfg.agg = "one_model"
+    else:
+        cfg.agg = "mtl"
 
     learner = FLearner(cfg, client_fn, client_selector, client_cls, loss_fn, writer) # type: ignore
     learner.run_simulation()
