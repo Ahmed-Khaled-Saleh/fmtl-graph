@@ -20,7 +20,7 @@ momentum_anchor: 0.5
 
 # FLearner arguments
 client_selector: BaseClientSelector
-client_cls: Fedu
+client_cls: FLAgent
 loss_fn: CrossEntropyLoss
 writer: WandbWriter
 
