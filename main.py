@@ -22,12 +22,11 @@ from dotenv import load_dotenv # type: ignore
 from peft import *  # type: ignore # noqa: F403
 
 
-def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = None, state_dir= None, extra= False):
+def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = None, state_dir= None):
     
     model = get_model(cfg)
     criterion = get_criterion(loss_fn)
-    train_block = get_block(cfg, id)
-    test_block = get_block(cfg, id, train=False)
+    train_block, test_block = get_block(cfg, id), get_block(cfg, id, train=False)
 
     state = {'model': model, 'optimizer': None, 'criterion': criterion, 't': t, 'h': None, 'h_c': None}
 

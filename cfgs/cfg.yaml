@@ -20,7 +20,7 @@ momentum_anchor: 0.5
 
 # FLearner arguments
 client_selector: BaseClientSelector
-client_cls: DMTL
+client_cls: Fedu
 loss_fn: CrossEntropyLoss
 writer: WandbWriter
 
@@ -30,7 +30,7 @@ root_dir: /scratch/project_2009050/
 save_dir : models
 res_dir: results
 log_dir: logs
-state_dir: aggregated_model_
+state_dir: states
 
 # metrics
 training_metrics: [accuracy_score]
@@ -41,7 +41,7 @@ data:
   data_dir: /scratch/project_2009050/
   modality: [Vision]
   batch_size: 20
-  name: Cifar10_20clients
+  name: cifar10_hetro_30
   niid: false
   balance: false
   partitioner: DirPartitioner
@@ -53,10 +53,10 @@ data:
 
 # Model configuration
 model:
-  name: CIFAR10CNN
+  name: CIFAR10Model
   n_channels: 3
   input_dim: 784
-  hidden_dim: 128
+  hidden_dim: 512
   num_classes: 10
   grad_norm_clip: 1.0
 
