@@ -41,7 +41,7 @@ data:
   data_dir: /scratch/project_2009050/
   modality: [Vision]
   batch_size: 20
-  name: cifar10_hetro_30
+  name: mnist_rotated_batched_40
   niid: false
   balance: false
   partitioner: DirPartitioner
@@ -53,8 +53,8 @@ data:
 
 # Model configuration
 model:
-  name: CIFAR10Model
-  n_channels: 3
+  name: MNISTCNN
+  n_channels: 1
   input_dim: 784
   hidden_dim: 512
   num_classes: 10
