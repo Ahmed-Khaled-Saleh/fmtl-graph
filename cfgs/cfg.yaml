@@ -5,22 +5,24 @@ num_clients: 40
 n_rounds: 200 
 m: 0.25
 local_epochs: 5 
-lr: 0.05
+lr: 0.01
 lr2: 0.001
-agg: ssl 
+personal_lr: 0.01
+K: 5
+agg: one_model 
 num_classes: 10
 alignment_criterion: MSELoss
 alpha: 0.49
-beta1: 0.9
+beta1: 1
 tau: 0.1
 optimizer2: Adam
-lambda_: 0.03
+lambda_: 15
 lambda_anchor: 0.1
 momentum_anchor: 0.5
 
 # FLearner arguments
 client_selector: BaseClientSelector
-client_cls: DMTL
+client_cls: pFedMe
 loss_fn: CrossEntropyLoss
 writer: WandbWriter
 
@@ -30,7 +32,7 @@ root_dir: /scratch/project_2009050/
 save_dir : models
 res_dir: results
 log_dir: logs
-state_dir: aggregated_model_
+state_dir: local_output_
 
 # metrics
 training_metrics: [accuracy_score]
