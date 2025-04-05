@@ -1,9 +1,9 @@
 project_name: mnist_rotated_batched_40
 random_seed: 42
 
-num_clients: 20
+num_clients: 40
 n_rounds: 200 
-m: 0.5
+m: 0.25
 local_epochs: 5 
 lr: 0.05
 lr2: 0.001
