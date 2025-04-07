@@ -28,15 +28,24 @@ def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = 
     criterion = get_criterion(loss_fn)
     train_block, test_block = get_block(cfg, id), get_block(cfg, id, train=False)
 
-    state = {'model': model, 'optimizer': None, 'criterion': criterion, 't': t, 'h': None, 'h_c': None, "persionalized_model_bar": None}
+    state = {'model': model, 'optimizer': None, 'criterion': criterion, 't': t, 'h': None, 'h_c': None, "pers_model": None}
 
+    
+    if t == 1 and cfg.client_cls == "pFedMe" and cfg.agg  != "one_model":
+        state = load_state_from_disk(cfg, state, latest_round, id, t, state_dir)  
+
+    if t == 1:
+        state['w0'] = deepcopy(state['model'])
+        
     if t > 1:
         state = load_state_from_disk(cfg, state, latest_round, id, t, state_dir)  
+        
 
     state['optimizer'] = get_cls("torch.optim", cfg.optimizer.name)(state['model'].parameters(), lr=cfg.lr)      
     state['alignment_criterion']= get_cls("torch.nn", cfg.alignment_criterion)
     
     return client_cls(id, cfg, state, block= [train_block, test_block])
+
 
 
 
