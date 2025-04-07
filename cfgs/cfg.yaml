@@ -14,6 +14,7 @@ num_classes: 10
 alignment_criterion: MSELoss
 alpha: 0.49
 beta1: 1
+beta: 1
 tau: 0.1
 optimizer2: Adam
 lambda_: 15
