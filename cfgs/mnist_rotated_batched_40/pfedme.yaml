@@ -1,4 +1,4 @@
-project_name: mnist_rotated_batched_40
+project_name: DMTL_graph_mnist_rotated_batched_40
 
 # FL configuration
 num_clients: 40

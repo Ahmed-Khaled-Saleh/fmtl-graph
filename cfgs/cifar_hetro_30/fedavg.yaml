@@ -1,4 +1,4 @@
-project_name: cifar10_hetro_30
+project_name: DMTL_graph_cifar_hetro_30
 
 # FL configuration
 num_clients: 30
