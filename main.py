@@ -81,9 +81,10 @@ if __name__ == "__main__":
     except:
         print("Invalid config file path")
 
-    cfg.now = args.timestamp if args.timestamp else datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    cfg.optimizer.lr = args.lr if args.lr else cfg.optimizer.lr
 
+    cfg.now = args.timestamp 
+    
+    cfg.optimizer.lr = args.lr if args.lr else cfg.optimizer.lr
     cfg.data.batch_size = args.batch_size if args.batch_size else cfg.data.batch_size
     cfg.optimizer.name = args.optimizer if args.optimizer else cfg.optimizer.name
 
