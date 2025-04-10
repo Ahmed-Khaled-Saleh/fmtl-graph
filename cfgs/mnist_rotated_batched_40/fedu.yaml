@@ -1,0 +1,60 @@
+project_name: mnist_rotated_batched_40
+
+# FL configuration
+num_clients: 40
+n_rounds: 200 
+m: 0.50
+local_epochs: 5 
+agg: mtl
+
+#fedu params
+lambda_: 0.03
+
+# FLearner arguments
+client_selector: BaseClientSelector
+client_cls: Fedu
+loss_fn: CrossEntropyLoss
+writer: WandbWriter
+
+
+# save and log directories
+root_dir: /scratch/project_2009050/
+save_dir : models
+res_dir: results
+log_dir: logs
+state_dir: aggregated_model_
+
+# metrics
+training_metrics: [accuracy_score]
+test_metrics: [accuracy_score]
+
+# Data configuration
+data:
+  data_dir: /scratch/project_2009050/
+  modality: [Vision]
+  batch_size: 32
+  name: mnist_rotated_batched_40
+  niid: false
+  balance: false
+  partitioner: DirPartitioner
+  alpha: 0.1
+  train_ratio: 0.75
+  num_classes: 10
+  classes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+# Model configuration
+model:
+  name: MNISTCNN
+  in_channels: 1
+  img_size: 28
+  hidden_dim: 256
+  num_classes: 10
+  grad_norm_clip: 1.0
+
+
+# optimzer configuration
+optimizer:
+  name: SGD
+  lr: 0.05
+  weight_decay: 0.0

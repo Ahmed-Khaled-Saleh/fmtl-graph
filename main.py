@@ -41,7 +41,7 @@ def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = 
         state = load_state_from_disk(cfg, state, latest_round, id, t, state_dir)  
         
 
-    state['optimizer'] = get_cls("torch.optim", cfg.optimizer.name)(state['model'].parameters(), lr=cfg.lr)      
+    state['optimizer'] = get_cls("torch.optim", cfg.optimizer.name)(state['model'].parameters(), lr=cfg.optimizer.lr)      
     state['alignment_criterion']= get_cls("torch.nn", cfg.alignment_criterion)
     
     return client_cls(id, cfg, state, block= [train_block, test_block])
@@ -53,10 +53,11 @@ def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run Federated Learning Simulation')
     parser.add_argument('--config', type=str, help='Path to the YAML config file', required=True)
+    parser.add_argument('--timestamp', type=str, help='Time stamp', required=True)
     parser.add_argument('--env_file', type=str, help='Path to the .env file', required=False)
+    
 
     parser.add_argument('--lr', type=float, help='Learning rate local', required=False)
-    parser.add_argument('--lr2', type=float, help='Learning rate alginment', required=False)
     parser.add_argument('--batch_size', type=int, help='Batch size', required=False)
     parser.add_argument('--optimizer', type=str, help='Optimizer', required=False)
     parser.add_argument('--client_cls', type=str, help='Client class', required=False)
@@ -79,9 +80,9 @@ if __name__ == "__main__":
             cfg = OmegaConf.load(file)
     except:
         print("Invalid config file path")
-    
-    cfg.lr = args.lr if args.lr else cfg.lr
-    cfg.lr2 = args.lr2 if args.lr2 else cfg.lr2
+
+    cfg.now = args.timestamp if args.timestamp else datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    cfg.optimizer.lr = args.lr if args.lr else cfg.optimizer.lr
 
     cfg.data.batch_size = args.batch_size if args.batch_size else cfg.data.batch_size
     cfg.optimizer.name = args.optimizer if args.optimizer else cfg.optimizer.name

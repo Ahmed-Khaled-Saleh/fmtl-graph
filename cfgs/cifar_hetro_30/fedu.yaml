@@ -1,28 +1,18 @@
-project_name: mnist_rotated_batched_40
-random_seed: 42
+project_name: cifar10_hetro_30
 
-num_clients: 40
+# FL configuration
+num_clients: 30
 n_rounds: 200 
-m: 0.25
+m: 0.50
 local_epochs: 5 
-lr: 0.01
-lr2: 0.001
-personal_lr: 0.01
-K: 5
-agg: one_model 
-num_classes: 10
-alignment_criterion: MSELoss
-alpha: 0.49
-beta1: 1
-tau: 0.1
-optimizer2: Adam
-lambda_: 15
-lambda_anchor: 0.1
-momentum_anchor: 0.5
+agg: mtl
+
+#fedu params
+lambda_: 0.03
 
 # FLearner arguments
 client_selector: BaseClientSelector
-client_cls: pFedMe
+client_cls: Fedu
 loss_fn: CrossEntropyLoss
 writer: WandbWriter
 
@@ -32,7 +22,7 @@ root_dir: /scratch/project_2009050/
 save_dir : models
 res_dir: results
 log_dir: logs
-state_dir: local_output_
+state_dir: aggregated_model_
 
 # metrics
 training_metrics: [accuracy_score]
@@ -42,8 +32,8 @@ test_metrics: [accuracy_score]
 data:
   data_dir: /scratch/project_2009050/
   modality: [Vision]
-  batch_size: 20
-  name: mnist_rotated_batched_40
+  batch_size: 32
+  name: cifar10_hetro_30
   niid: false
   balance: false
   partitioner: DirPartitioner
@@ -55,9 +45,9 @@ data:
 
 # Model configuration
 model:
-  name: MNISTCNN
-  n_channels: 1
-  input_dim: 784
+  name: CIFAR10Model
+  in_channels: 3
+  img_size: 32
   hidden_dim: 512
   num_classes: 10
   grad_norm_clip: 1.0
@@ -66,4 +56,5 @@ model:
 # optimzer configuration
 optimizer:
   name: SGD
+  lr: 0.01
   weight_decay: 0.0
