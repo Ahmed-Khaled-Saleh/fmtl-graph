@@ -42,7 +42,6 @@ def client_fn(client_cls, cfg, id, latest_round, t, loss_fn = None, optimizer = 
         
 
     state['optimizer'] = get_cls("torch.optim", cfg.optimizer.name)(state['model'].parameters(), lr=cfg.optimizer.lr)      
-    state['alignment_criterion']= get_cls("torch.nn", cfg.alignment_criterion)
     
     return client_cls(id, cfg, state, block= [train_block, test_block])
 
@@ -83,7 +82,7 @@ if __name__ == "__main__":
 
 
     cfg.now = args.timestamp 
-    
+
     cfg.optimizer.lr = args.lr if args.lr else cfg.optimizer.lr
     cfg.data.batch_size = args.batch_size if args.batch_size else cfg.data.batch_size
     cfg.optimizer.name = args.optimizer if args.optimizer else cfg.optimizer.name
@@ -99,10 +98,6 @@ if __name__ == "__main__":
     loss_fn = get_cls("torch.nn", cfg.loss_fn)
     writer = get_cls("fedai.wandb_writer", cfg.writer)
 
-    if cfg.client_cls == "FLAgent":
-        cfg.agg = "one_model"
-    else:
-        cfg.agg = "mtl"
 
     learner = FLearner(cfg, client_fn, client_selector, client_cls, loss_fn, writer) # type: ignore
     learner.run_simulation()
