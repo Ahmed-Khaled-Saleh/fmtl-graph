@@ -1,5 +1,4 @@
 #!/bin/bash
-ts=$(date +%Y%m%d_%H%M%S)
 #SBATCH --account=project_2009050
 #SBATCH --job-name=dmtl
 #SBATCH --partition=gpusmall
@@ -11,6 +10,7 @@ ts=$(date +%Y%m%d_%H%M%S)
 #SBATCH --output=./logs/out_${ts}_%j_%x_%N.log  # includes time stamp (t), job ID(j), job name (x), and node name (N)
 #SBATCH --error=./logs/err_${ts}_%j_%x_%N.log
 
+
 module --force purge
 module load pytorch
 source /projappl/project_2009050/mytorch/bin/activate
@@ -21,4 +21,5 @@ cd /projappl/project_2009050/fmtl-graph
 export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/mytorch/lib/python3.11/site-packages
 echo "Current PYTHONPATH: $PYTHONPATH"
 
+ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts}
