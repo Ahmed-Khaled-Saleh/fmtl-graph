@@ -84,8 +84,8 @@ if __name__ == "__main__":
 
     cfg.now = args.timestamp 
 
-    cfg.optimizer.lr = args.lr if args.lr else cfg.optimizer.lr
-    cfg.data.batch_size = args.batch_size if args.batch_size else cfg.data.batch_size
+    cfg.optimizer.lr = float(args.lr) if args.lr else cfg.optimizer.lr
+    cfg.data.batch_size = int(args.batch_size) if args.batch_size else cfg.data.batch_size
     cfg.optimizer.name = args.optimizer if args.optimizer else cfg.optimizer.name
 
     cfg.client_cls = args.client_cls if args.client_cls else cfg.client_cls
@@ -93,11 +93,13 @@ if __name__ == "__main__":
     cfg.agg = args.agg if args.agg else cfg.agg
 
     if  cfg.client_cls in ["pFedMe", "Fedu", "DMTL"]:
-        cfg.lambda_ = args.lambda_ if args.lambda_ else cfg.lambda_
-        
-    if cfg.client_cls == "DMTL":
-        cfg.alpha = args.alpha if args.alpha else cfg.alpha
+        cfg.lambda_ = float(args.lambda_) if args.lambda_ else cfg.lambda_
 
+    if cfg.client_cls == "DMTL":
+        cfg.alpha = float(args.alpha) if args.alpha else cfg.alpha
+
+    print("cfg.alpha", cfg.alpha)
+    print(type(cfg.alpha))
    
     client_selector = get_cls("fedai.client_selector", cfg.client_selector)
     client_cls = get_cls("fedai.federated.agents", cfg.client_cls)
