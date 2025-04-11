@@ -22,6 +22,9 @@ echo "Current PYTHONPATH: $PYTHONPATH"
 
 ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.1
+ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.01
+ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.001
+ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 1

@@ -21,4 +21,5 @@ export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/code/FMTL-graph/mytorch/
 echo "Current PYTHONPATH: $PYTHONPATH"
 ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/hyperparams/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --alpha 0.9
+ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/hyperparams/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --alpha 0.1
