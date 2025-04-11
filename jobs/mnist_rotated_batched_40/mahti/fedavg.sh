@@ -1,5 +1,4 @@
 #!/bin/bash
-ts=$(date +%Y%m%d_%H%M%S)
 #SBATCH --account=project_2009050
 #SBATCH --job-name=fedavg
 #SBATCH --partition=gpusmall
@@ -20,5 +19,5 @@ cd /projappl/project_2009050/fmtl-graph
 
 export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/mytorch/lib/python3.11/site-packages
 echo "Current PYTHONPATH: $PYTHONPATH"
-
+ts=$(date +%Y%m%d_%H%M%S)
 srun python main.py --config ./cfgs/mnist_rotated_batched_40/fedavg.yaml --env_file ./.env --timestamp ${ts}
