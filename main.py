@@ -90,7 +90,6 @@ if __name__ == "__main__":
     cfg.client_cls = args.client_cls if args.client_cls else cfg.client_cls
 
     cfg.agg = args.agg if args.agg else cfg.agg
-    # cfg.lambda_ = args.lambda_ if args.lambda_ else cfg.lambda_
 
    
     client_selector = get_cls("fedai.client_selector", cfg.client_selector)
