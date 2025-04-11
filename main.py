@@ -62,6 +62,7 @@ if __name__ == "__main__":
     parser.add_argument('--client_cls', type=str, help='Client class', required=False)
     parser.add_argument('--agg', type=str, help='Aggregation', required=False)
     parser.add_argument('--lambda_', type=str, help='lambda for fedu and dmtl', required=False)
+    parser.add_argument('--alpha', type=str, help='alpha for dmtl', required=False)
     args = parser.parse_args()
 
     if args.env_file:
@@ -90,6 +91,12 @@ if __name__ == "__main__":
     cfg.client_cls = args.client_cls if args.client_cls else cfg.client_cls
 
     cfg.agg = args.agg if args.agg else cfg.agg
+
+    if  cfg.client_cls in ["pFedMe", "Fedu", "DMTL"]:
+        cfg.lambda_ = args.lambda_ if args.lambda_ else cfg.lambda_
+        
+    if cfg.client_cls == "DMTL":
+        cfg.alpha = args.alpha if args.alpha else cfg.alpha
 
    
     client_selector = get_cls("fedai.client_selector", cfg.client_selector)
