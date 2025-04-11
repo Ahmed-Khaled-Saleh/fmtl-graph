@@ -21,5 +21,5 @@ export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/code/FMTL-graph/mytorch/
 echo "Current PYTHONPATH: $PYTHONPATH"
 
 ts=$(date +%Y%m%d_%H%M%S)
-srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --alpha 0.9
-srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --alpha 0.1
+srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --alpha 0.9
+srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --alpha 0.1

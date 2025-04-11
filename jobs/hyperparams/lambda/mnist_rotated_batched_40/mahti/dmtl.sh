@@ -20,7 +20,7 @@ cd /projappl/project_2009050/fmtl-graph
 export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/mytorch/lib/python3.11/site-packages
 echo "Current PYTHONPATH: $PYTHONPATH"
 ts=$(date +%Y%m%d_%H%M%S)
-srun python main.py --config ./cfgs/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.1
-srun python main.py --config ./cfgs/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.01
-srun python main.py --config ./cfgs/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.001
-srun python main.py --config ./cfgs/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 1
+srun python main.py --config ./cfgs/hyperparams/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.1
+srun python main.py --config ./cfgs/hyperparams/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.01
+srun python main.py --config ./cfgs/hyperparams/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.001
+srun python main.py --config ./cfgs/hyperparams/mnist_rotated_batched_40/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 1

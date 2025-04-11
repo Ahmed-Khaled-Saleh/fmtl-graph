@@ -22,7 +22,7 @@ export PYTHONPATH=$PYTHONPATH:/projappl/project_2009050/mytorch/lib/python3.11/s
 echo "Current PYTHONPATH: $PYTHONPATH"
 
 ts=$(date +%Y%m%d_%H%M%S)
-srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.1
-srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.01
-srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.001
-srun python main.py --config ./cfgs/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 1
+srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.1
+srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.01
+srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 0.001
+srun python main.py --config ./cfgs/hyperparams/cifar_hetro_30/dmtl.yaml --env_file ./.env --timestamp ${ts} --lambda_ 1
