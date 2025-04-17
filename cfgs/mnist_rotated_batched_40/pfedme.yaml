@@ -9,7 +9,7 @@ agg: one_model
 
 #pFedMe params
 K: 5
-lambda_: 15
+lambda_: 0.003
 personal_lr: 0.01
 beta: 1
 
