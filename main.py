@@ -98,8 +98,7 @@ if __name__ == "__main__":
     if cfg.client_cls == "DMTL":
         cfg.alpha = float(args.alpha) if args.alpha else cfg.alpha
 
-    print("cfg.alpha", cfg.alpha)
-    print(type(cfg.alpha))
+    
    
     client_selector = get_cls("fedai.client_selector", cfg.client_selector)
     client_cls = get_cls("fedai.federated.agents", cfg.client_cls)
