@@ -4,7 +4,7 @@ project_name: DMTL_graph_cifar_hetro_30
 num_clients: 30
 n_rounds: 200 
 m: 0.50
-local_epochs: 10 
+local_epochs: 5 
 agg: one_model 
 
 # FLearner arguments
