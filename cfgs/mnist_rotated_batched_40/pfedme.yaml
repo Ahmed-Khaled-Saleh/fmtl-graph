@@ -9,8 +9,8 @@ agg: one_model
 
 #pFedMe params
 K: 5
-lambda_: 0.003
-personal_lr: 0.01
+lambda_: 15
+personal_lr: 0.09
 beta: 1
 
 
@@ -61,5 +61,5 @@ model:
 # optimzer configuration
 optimizer:
   name: SGD
-  lr: 0.01
+  lr: 0.005
   weight_decay: 0.0
