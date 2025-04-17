@@ -4,7 +4,7 @@ project_name: DMTL_graph_cifar_hetro_30
 num_clients: 30
 n_rounds: 200 
 m: 0.50
-local_epochs: 5 
+local_epochs: 3 
 agg: one_model 
 
 # FLearner arguments
@@ -53,5 +53,5 @@ model:
 # optimzer configuration
 optimizer:
   name: SGD
-  lr: 0.01
+  lr: 0.03
   weight_decay: 0.0
