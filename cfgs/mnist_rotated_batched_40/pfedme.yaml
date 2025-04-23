@@ -4,11 +4,11 @@ project_name: DMTL_graph_mnist_rotated_batched_40
 num_clients: 40
 n_rounds: 200 
 m: 0.50
-local_epochs: 20 
+local_epochs: 5 
 agg: one_model
 
 #pFedMe params
-K: 5
+K: 20
 lambda_: 0.03
 personal_lr: 0.09
 beta: 1
