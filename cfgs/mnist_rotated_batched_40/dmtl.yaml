@@ -51,7 +51,7 @@ model:
   name: MNISTCNN
   in_channels: 1
   img_size: 28
-  hidden_dim: 256
+  hidden_dim: 512
   num_classes: 10
   grad_norm_clip: 1.0
 
